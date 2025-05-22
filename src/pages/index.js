@@ -4,6 +4,7 @@ import Weapons from "@/components/Weapons";
 import Worlds from "@/components/Worlds";
 import Enemies from "@/components/Enemies";
 import Image from "next/image";
+import styles from "@/styles/EncuestaGOW.module.css";
 
 export default function Home() {
   const [selectedGod, setSelectedGod] = useState(null);
@@ -28,82 +29,110 @@ export default function Home() {
     console.log(selectedEnemies);
   }, [selectedEnemies]);
 
+  useEffect(() => {
+    const audio = new Audio("/sounds/god-of-war-theme.mp3");
+    audio.volume = 0.3;
+    audio.loop = true; 
+    audio.play().catch((error) => {
+      console.log("Reproducción automática bloqueada por el navegador");
+    });
+  }, []);
+
+  <button onClick={() => {
+    const audio = new Audio("/sounds/god-of-war-theme.mp3");
+    audio.volume = 0.3;
+    audio.loop = true;
+    audio.play();
+  }}>Reproducir música</button>
+  
 
   return (
     <div>
-      <div>
-        <Dioses titulo={"Seleccionar Dios"} selectedGod={setSelectedGod} />
+      <div className={styles.container}>
+      <div className={styles.sectionTitle}>
+        <Dioses titulo={"Seleccionar Dios"}  selectedGod={setSelectedGod} />
       </div>
       {selectedGod != null && (
-        <div>
-          <Image 
+        <div className={styles.selectedItem}>
+          <Image className={styles.imagen}
           src={`${selectedGod.imagen}`}
           width={200}
           height={200}
           alt={`${selectedGod.nameG}`}/>
-          <div>
-          <p>{`${selectedGod.descripcion}`}</p>
+          <div className={styles.description}>
+          <p >{`${selectedGod.descripcion}`} </p>
             </div>
         </div>
       )}
+      </div>
 
-      <div>
+
+      <div className={styles.container}>
+      <div className={styles.sectionTitle}>
         <Weapons
-          titulo={"Selecciona un arma"}
+          titulo={"Selecciona un arma"} 
           selectedWeapon={setSelectedWeapon}
         />
       </div>
       {selectedWeapon != null && (
-        <div>
-          <Image 
+        <div className={styles.selectedItem}>
+          <Image className={styles.imagen}
           src={`${selectedWeapon.imagen}`}
           width={200}
           height={200}
           alt={`${selectedWeapon.weapon}`}/>
-          <div>
+          <div className={styles.description}>
           <p>{`${selectedWeapon.descripcion}`}</p>
             </div>
           
         </div>
       )}
+      </div>
       
-      <div>
+
+      <div className={styles.container}>
+      <div className={styles.sectionTitle}>
         <Worlds
           titulo={"Selecciona un Mundo"}
           selectedWorld={setSelectedWorld}
         />
       </div>
       {selectedWorld != null && (
-        <div>
-          <Image 
+        <div className={styles.selectedItem}>
+          <Image className={styles.imagen}
           src={`${selectedWorld.imagen}`}
           width={200}
           height={200}
           alt={`${selectedWorld.name}`}/>
-          <div>
-          <p>{`${selectedWorld.descripcion}`}</p>
+          <div className={styles.description}>
+          <p className={styles.descripcion}>{`${selectedWorld.descripcion}`}</p>
             </div>
         </div>
       )}
+      </div>
 
-    <div>
+
+
+      <div className={styles.container}>
+    <div className={styles.sectionTitle}>
         <Enemies
-          titulo={"Seleccionar Enemigos"}
+          titulo={"Seleccionar Enemigos"} 
           selectedEnemies={setSelectedEnemies}
         />
       </div>
       {selectedEnemies!= null && (
-        <div>
-          <Image 
+        <div className={styles.selectedItem}>
+          <Image className={styles.imagen}
           src={`${selectedEnemies.imagen}`}
           width={200}
           height={200}
           alt={`${selectedEnemies.name}`}/>
-          <div>
+          <div className={styles.description}>
           <p>{`${selectedEnemies.descripcion}`}</p>
             </div>
         </div>
       )}
+      </div>
     </div>
   );
 }
